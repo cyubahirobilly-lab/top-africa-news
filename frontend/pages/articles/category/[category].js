@@ -16,7 +16,7 @@ export default function CategoryPage({ category, articles }) {
 
 export async function getServerSideProps({ params }) {
   try {
-    const response = await fetch(`http://localhost:5000/api/articles?category=${params.category}`)
+    const response = await fetch(`http://127.0.0.1:5000/api/articles?category=${params.category}`)
     const payload = await response.json()
 
     return {

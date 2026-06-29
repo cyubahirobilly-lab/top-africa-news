@@ -48,8 +48,8 @@ export default function Home({ articles, trending }) {
 export async function getServerSideProps() {
   try {
     const [articlesRes, trendingRes] = await Promise.all([
-      fetch('http://localhost:5000/api/articles?limit=20'),
-      fetch('http://localhost:5000/api/trending?limit=10'),
+      fetch('http://127.0.0.1:5000/api/articles?limit=20'),
+      fetch('http://127.0.0.1:5000/api/trending?limit=10'),
     ])
 
     const articlesPayload = await articlesRes.json()

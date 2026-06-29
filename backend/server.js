@@ -4,6 +4,7 @@ const cors = require('cors')
 const helmet = require('helmet')
 const rateLimit = require('express-rate-limit')
 const { MongoMemoryServer } = require('mongodb-memory-server')
+const User = require('./models/User')
 require('dotenv').config()
 
 const app = express()
@@ -59,7 +60,24 @@ async function connectToDatabase() {
   }
 }
 
-connectToDatabase()
+connectToDatabase().then(async () => {
+  if (mongoose.connection.readyState !== 1) return
+
+  try {
+    const count = await User.countDocuments()
+    if (count > 0) return
+
+    const defaultUsers = [
+      { name: 'System Admin', email: 'admin@topafrica.news', password: 'admin123', role: 'admin' },
+      { name: 'Reporter One', email: 'reporter@topafrica.news', password: 'reporter123', role: 'reporter' },
+    ]
+
+    await User.insertMany(defaultUsers)
+    console.log('Seeded default users: admin@topafrica.news / admin123 and reporter@topafrica.news / reporter123')
+  } catch (error) {
+    console.warn('Default user seeding failed.', error.message)
+  }
+})
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {

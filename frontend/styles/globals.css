@@ -4,11 +4,16 @@
 
 @layer base {
   html {
+    @apply h-full scroll-smooth;
     color-scheme: light;
   }
 
   body {
-    @apply bg-white text-gray-900;
+    @apply min-h-full bg-[#F8F9FA] text-[#1A1A1A] antialiased transition-colors duration-300;
+  }
+
+  .dark body {
+    @apply bg-slate-950 text-slate-100;
   }
 }
 
@@ -16,12 +21,24 @@
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
-  
+
   .btn-primary {
-    @apply bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300;
+    @apply bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold py-2 px-4 rounded-lg transition duration-300;
   }
-  
+
   .card-news {
-    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300;
+    @apply rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300;
+  }
+
+  .input-field {
+    @apply w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500;
+  }
+
+  .accent-text {
+    @apply text-[#007A5E];
+  }
+
+  .breaking-tag {
+    @apply bg-[#D62828] text-white;
   }
 }

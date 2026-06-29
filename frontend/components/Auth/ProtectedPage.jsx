@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000'
 
 export default function ProtectedPage({ children, requiredRole = 'reporter', title, description }) {
   const [auth, setAuth] = useState(null)
@@ -104,7 +104,7 @@ export default function ProtectedPage({ children, requiredRole = 'reporter', tit
               <input
                 value={form.name}
                 onChange={handleChange('name')}
-                className="mt-2 w-full rounded-2xl border border-slate-300 px-4 py-3 dark:border-slate-700 dark:bg-slate-950"
+                className="mt-2 input-field"
                 placeholder="Your full name"
               />
             </div>
@@ -115,7 +115,7 @@ export default function ProtectedPage({ children, requiredRole = 'reporter', tit
               type="email"
               value={form.email}
               onChange={handleChange('email')}
-              className="mt-2 w-full rounded-2xl border border-slate-300 px-4 py-3 dark:border-slate-700 dark:bg-slate-950"
+              className="mt-2 input-field"
               placeholder="you@topafrica.news"
             />
           </div>
@@ -125,7 +125,7 @@ export default function ProtectedPage({ children, requiredRole = 'reporter', tit
               type="password"
               value={form.password}
               onChange={handleChange('password')}
-              className="mt-2 w-full rounded-2xl border border-slate-300 px-4 py-3 dark:border-slate-700 dark:bg-slate-950"
+              className="mt-2 input-field"
               placeholder="Create or enter your password"
             />
           </div>

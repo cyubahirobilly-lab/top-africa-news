@@ -11,11 +11,21 @@ const fallbackArticle = {
 }
 
 export default function ArticlePage({ article }) {
+  const seoTitle = article?.seo?.title || article?.title || 'Top Africa News'
+  const seoDescription = article?.seo?.description || article?.excerpt || 'Latest news from Africa'
+  const seoKeywords = article?.seo?.keywords?.join(', ') || 'Africa news, top stories'
+
   return (
     <Layout>
       <NextSeo
-        title={article.title}
-        description={article.excerpt}
+        title={seoTitle}
+        description={seoDescription}
+        openGraph={{
+          title: seoTitle,
+          description: seoDescription,
+          images: article?.image?.url ? [{ url: article.image.url, alt: article.image.alt || seoTitle }] : [],
+        }}
+        additionalMetaTags={[{ name: 'keywords', content: seoKeywords }]}
       />
       <ArticleFull article={article} />
     </Layout>
@@ -24,7 +34,7 @@ export default function ArticlePage({ article }) {
 
 export async function getServerSideProps({ params }) {
   try {
-    const response = await fetch(`http://localhost:5000/api/articles/${params.slug}`)
+    const response = await fetch(`http://127.0.0.1:5000/api/articles/${params.slug}`)
     const payload = await response.json()
 
     return {
