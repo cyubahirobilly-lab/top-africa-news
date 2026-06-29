@@ -1,0 +1,31 @@
+{
+  "name": "top-africa-news-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.6",
+    "autoprefixer": "10.4.16",
+    "postcss": "8.4.32",
+    "axios": "^1.6.2",
+    "react-icons": "^4.12.0",
+    "react-hook-form": "^7.48.2",
+    "react-query": "^3.39.3",
+    "next-themes": "^0.2.1",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
+    "date-fns": "^2.30.0",
+    "react-share": "^5.0.3",
+    "react-hot-toast": "^2.4.1",
+    "quill": "^2.0.0",
+    "next-seo": "^6.4.0"
+  }
+}
