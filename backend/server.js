@@ -72,7 +72,9 @@ connectToDatabase().then(async () => {
       { name: 'Reporter One', email: 'reporter@topafrica.news', password: 'reporter123', role: 'reporter' },
     ]
 
-    await User.insertMany(defaultUsers)
+    for (const userData of defaultUsers) {
+      await User.create(userData)
+    }
     console.log('Seeded default users: admin@topafrica.news / admin123 and reporter@topafrica.news / reporter123')
   } catch (error) {
     console.warn('Default user seeding failed.', error.message)
