@@ -6,5 +6,7 @@ build
 .next
 
 .env
+.env.local
+.env.*.local
 
 npm-debug.log*
