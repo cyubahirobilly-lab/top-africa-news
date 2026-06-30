@@ -21,6 +21,17 @@ const limiter = rateLimit({
 })
 app.use('/api', limiter)
 
+// SEO Routes
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain')
+  res.send(`User-agent: *
+Allow: /
+Disallow: /api/auth
+Disallow: /admin
+
+Sitemap: ${process.env.FRONTEND_URL || 'http://localhost:3000'}/sitemap.xml`)
+})
+
 // Routes
 const articleRoutes = require('./routes/articles')
 const authRoutes = require('./routes/auth')

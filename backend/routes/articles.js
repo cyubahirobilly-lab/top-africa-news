@@ -350,4 +350,59 @@ router.delete('/:id', authenticate, authorize(['admin', 'editor']), async (req, 
   }
 })
 
+// Sitemap for SEO
+router.get('/sitemap.xml', async (req, res) => {
+  try {
+    const articles = mongoose.connection.readyState === 1 
+      ? await Article.find({ status: 'published' }).select('slug updatedAt')
+      : sampleArticles
+    
+    const { generateSitemap } = require('../utils/seo')
+    const sitemap = generateSitemap(articles)
+    
+    res.header('Content-Type', 'application/xml')
+    res.send(sitemap)
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message })
+  }
+})
+
+// RSS Feed for SEO and content distribution
+router.get('/rss', async (req, res) => {
+  try {
+    const articles = mongoose.connection.readyState === 1 
+      ? await Article.find({ status: 'published' }).sort('-createdAt').limit(20)
+      : sampleArticles.filter(a => a.status === 'published')
+    
+    const baseUrl = process.env.FRONTEND_URL || 'http://localhost:3000'
+    
+    let rss = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    rss += '<rss version="2.0">\n'
+    rss += '  <channel>\n'
+    rss += '    <title>Top Africa News</title>\n'
+    rss += '    <link>' + baseUrl + '</link>\n'
+    rss += '    <description>Coverage of the latest stories across Africa.</description>\n'
+    rss += '    <language>en-us</language>\n'
+    
+    articles.forEach(article => {
+      rss += '    <item>\n'
+      rss += '      <title>' + (article.title || 'Untitled') + '</title>\n'
+      rss += '      <link>' + baseUrl + '/articles/' + article.slug + '</link>\n'
+      rss += '      <description>' + (article.excerpt || article.content?.substring(0, 200) || '') + '</description>\n'
+      rss += '      <category>' + (article.category || 'News') + '</category>\n'
+      rss += '      <pubDate>' + new Date(article.createdAt).toUTCString() + '</pubDate>\n'
+      rss += '      <guid>' + baseUrl + '/articles/' + article.slug + '</guid>\n'
+      rss += '    </item>\n'
+    })
+    
+    rss += '  </channel>\n'
+    rss += '</rss>'
+    
+    res.header('Content-Type', 'application/xml')
+    res.send(rss)
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message })
+  }
+})
+
 module.exports = router
